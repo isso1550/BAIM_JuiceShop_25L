@@ -8,6 +8,8 @@ import { UserModel } from '../models/user'
 import challengeUtils = require('../lib/challengeUtils')
 import * as utils from '../lib/utils'
 
+var xss = require("xss");
+
 const security = require('../lib/insecurity')
 const cache = require('../data/datacache')
 const challenges = cache.challenges
@@ -24,7 +26,9 @@ module.exports = function updateUserProfile () {
               (req.headers.referer?.includes('://htmledit.squarefree.com'))) &&
               req.body.username !== user.username
           })
-          void user.update({ username: req.body.username }).then((savedUser: UserModel) => {
+          // void user.update({ username: req.body.username })
+          console.log("BAIM: sanityzacja nowego username: ", req.body.username, " wynik: ", xss(req.body.username)) //BAIM
+          void user.update({ username: xss(req.body.username) }).then((savedUser: UserModel) => {
             // @ts-expect-error FIXME some properties missing in savedUser
             savedUser = utils.queryResultToJson(savedUser)
             const updatedToken = security.authorize(savedUser)

@@ -17,6 +17,8 @@ import {
 import { challenges } from '../data/datacache'
 import * as security from '../lib/insecurity'
 
+var xss = require("xss");
+
 class Feedback extends Model<
 InferAttributes<Feedback>,
 InferCreationAttributes<Feedback>
@@ -43,6 +45,7 @@ const FeedbackModelInit = (sequelize: Sequelize) => {
           let sanitizedComment: string
           if (utils.isChallengeEnabled(challenges.persistedXssFeedbackChallenge)) {
             sanitizedComment = security.sanitizeHtml(comment)
+            sanitizedComment = xss(sanitizedComment) //BAIM
             challengeUtils.solveIf(challenges.persistedXssFeedbackChallenge, () => {
               return utils.contains(
                 sanitizedComment,
@@ -51,6 +54,7 @@ const FeedbackModelInit = (sequelize: Sequelize) => {
             })
           } else {
             sanitizedComment = security.sanitizeSecure(comment)
+            sanitizedComment = xss(sanitizedComment) //BAIM
           }
           this.setDataValue('comment', sanitizedComment)
         }
