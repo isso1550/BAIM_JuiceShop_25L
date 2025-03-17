@@ -20,7 +20,8 @@ import * as utils from './utils'
 import * as z85 from 'z85'
 
 export const publicKey = fs ? fs.readFileSync('encryptionkeys/jwt.pub', 'utf8') : 'placeholder-public-key'
-const privateKey = '-----BEGIN RSA PRIVATE KEY-----\r\nMIICXAIBAAKBgQDNwqLEe9wgTXCbC7+RPdDbBbeqjdbs4kOPOIGzqLpXvJXlxxW8iMz0EaM4BKUqYsIa+ndv3NAn2RxCd5ubVdJJcX43zO6Ko0TFEZx/65gY3BE0O6syCEmUP4qbSd6exou/F+WTISzbQ5FBVPVmhnYhG/kpwt/cIxK5iUn5hm+4tQIDAQABAoGBAI+8xiPoOrA+KMnG/T4jJsG6TsHQcDHvJi7o1IKC/hnIXha0atTX5AUkRRce95qSfvKFweXdJXSQ0JMGJyfuXgU6dI0TcseFRfewXAa/ssxAC+iUVR6KUMh1PE2wXLitfeI6JLvVtrBYswm2I7CtY0q8n5AGimHWVXJPLfGV7m0BAkEA+fqFt2LXbLtyg6wZyxMA/cnmt5Nt3U2dAu77MzFJvibANUNHE4HPLZxjGNXN+a6m0K6TD4kDdh5HfUYLWWRBYQJBANK3carmulBwqzcDBjsJ0YrIONBpCAsXxk8idXb8jL9aNIg15Wumm2enqqObahDHB5jnGOLmbasizvSVqypfM9UCQCQl8xIqy+YgURXzXCN+kwUgHinrutZms87Jyi+D8Br8NY0+Nlf+zHvXAomD2W5CsEK7C+8SLBr3k/TsnRWHJuECQHFE9RA2OP8WoaLPuGCyFXaxzICThSRZYluVnWkZtxsBhW2W8z1b8PvWUE7kMy7TnkzeJS2LSnaNHoyxi7IaPQUCQCwWU4U+v4lD7uYBw00Ga/xt+7+UqFPlPVdz1yyr4q24Zxaw0LgmuEvgU5dycq8N7JxjTubX0MIRR+G9fmDBBl8=\r\n-----END RSA PRIVATE KEY-----'
+//const privateKey = '-----BEGIN RSA PRIVATE KEY-----\r\nMIICXAIBAAKBgQDNwqLEe9wgTXCbC7+RPdDbBbeqjdbs4kOPOIGzqLpXvJXlxxW8iMz0EaM4BKUqYsIa+ndv3NAn2RxCd5ubVdJJcX43zO6Ko0TFEZx/65gY3BE0O6syCEmUP4qbSd6exou/F+WTISzbQ5FBVPVmhnYhG/kpwt/cIxK5iUn5hm+4tQIDAQABAoGBAI+8xiPoOrA+KMnG/T4jJsG6TsHQcDHvJi7o1IKC/hnIXha0atTX5AUkRRce95qSfvKFweXdJXSQ0JMGJyfuXgU6dI0TcseFRfewXAa/ssxAC+iUVR6KUMh1PE2wXLitfeI6JLvVtrBYswm2I7CtY0q8n5AGimHWVXJPLfGV7m0BAkEA+fqFt2LXbLtyg6wZyxMA/cnmt5Nt3U2dAu77MzFJvibANUNHE4HPLZxjGNXN+a6m0K6TD4kDdh5HfUYLWWRBYQJBANK3carmulBwqzcDBjsJ0YrIONBpCAsXxk8idXb8jL9aNIg15Wumm2enqqObahDHB5jnGOLmbasizvSVqypfM9UCQCQl8xIqy+YgURXzXCN+kwUgHinrutZms87Jyi+D8Br8NY0+Nlf+zHvXAomD2W5CsEK7C+8SLBr3k/TsnRWHJuECQHFE9RA2OP8WoaLPuGCyFXaxzICThSRZYluVnWkZtxsBhW2W8z1b8PvWUE7kMy7TnkzeJS2LSnaNHoyxi7IaPQUCQCwWU4U+v4lD7uYBw00Ga/xt+7+UqFPlPVdz1yyr4q24Zxaw0LgmuEvgU5dycq8N7JxjTubX0MIRR+G9fmDBBl8=\r\n-----END RSA PRIVATE KEY-----'
+const privateKey = '-----BEGIN PRIVATE KEY-----\r\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDMG/rsR2Hx/5bUQVtbhodBkMt7JBjJNokOPhUB1dq1irSF547znRPkv/Jw65cJD/FYU54X4xDjd09Vug/SQjhNFT0VQ9o0FQlGFurx9R+EQd53YMy3S/odt28gH5ZyAciBiUhyordbRHSeJhywn0+vQz33ls4FjtOsDML2C0WLjBM725wD41eAgARmfui9IK3j/H24c6+xGgHXSe2otpwr5jeZG4e5yRs+tAjgY4QUN65jiKn0b8OFnnDFsbn+9+tUvcrl/ipiLkKkBrs+PmJ/9RElaGTztl4YXZHN+GR8E5kGfC7I5kj60nniMQzskV3v6k5IBHv0D15nJqsZXo0FAgMBAAECggEAB8IuhRRnjYvcygpb9HwwywC72LKeuz32nWh7DZv5RCUBcgTtzaZ/Duxu75+SQ6wWoqK3DosOkB7vuz9R16O1wSmureQWOMbt7dCe3f371Iqub/+UIzQ2Td00UlZxC7oJSvHoI5dk0d7QcgHaiFTd8g25Hsldi8o0k0R+6rGzUze5TPrWixunkJt8SLG9FNcj7+CghtIujeT1wuRkYBjyZk5dilNBiq7WKx8XCM76z38bQFS2ddVPS6JjZ7ROgaPQc/YsWfeVN/LpWDTmNq2E2mmlEqLQGELlb6Hc1YrzIXklUi6SGMG/zeJK7DCbCnrBUTFFIRX+w3XP+Zw8QA7qBwKBgQDxGLJb2jObes48Xh7Sujy93ufHW1e9Bx5TVEdsAlhSWGhtM6yfEDx9VQ0K2KLWVgrJZofe03NRf15cAQT2oEWozgHqurl/wEUaV8ihSqE7Ccckc1KTM6xOh5tXuvavWdTiBhKidggJxjEKIkyo3qBudowS8IS0j6TUeQORYvUPWwKBgQDYufgGVHMnrIZxksccpgVo6zZXxo6TaXJJ3tjcIkR6X3HRPqB4sOjLIf3G38Jcrq8NgCHr+Vw93FsAQeva7N7QtHe2KKMsILlk0CpT4oxmjE7T0LQInjbLOZ6AxJG6tUDge/Y4JOok3g9TyF4BHn1mNIIC/bSmGgIEq+s+83zjHwKBgDOiqnBppyvhfVIIhmlzYZb4qoNT2NKvN5t5LWLAjdH1BUh+DLZ0b8AX+xcblqR5AQ5pWygp+US3Fqp1vW5knQauOFLhcuEdeK9PpbSFm0pdqbzwxfqo0npvKKH9dN/RSXqu+ka5KLePLumQtwJjy9Bcq1tTD9jr+s1WraDxpLKJAoGAMl1VVDM/55JiU/ZmKzQxwaYXpOJRs9QnaR9Oiim0fDO+AYBqTmHeV4Z4sUTCqEM4Dw0d1PbIBuA0jaTEKMYvKZUm1MAw20pnixQNIh1dv18P2o1/qRkLZsLnIMmNjDQe9YwZNgbuGs84BKJlpiDtx1igdg17c7ZLjcZeDu0KssUCgYB7SwD0qyO4/N5++nuskl453Sm6ZEnzSz7BF45ora2U3hS3+sXw7JXI69SG4h8vb2CEGhQEkoVRYh/fwPmef9KthrzdyqhZ7hy1JCqoDiEiMm7FE4tS47yu3aRK4RtthqVFRhbUWB+Ma+iFkfI//dn8U5eLDwutyVylRdj0wiwSBg==\r\n-----END PRIVATE KEY-----'
 
 interface ResponseWithUser {
   status: string
@@ -188,12 +189,17 @@ export const appendUserId = () => {
 export const updateAuthenticatedUsers = () => (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.token || utils.jwtFrom(req)
   if (token) {
-    jwt.verify(token, publicKey, (err: Error | null, decoded: any) => {
+    console.log("BAIM: Sprawdzanie tokena JWT ", token)
+    jwt.verify(token, publicKey, {algorithms: ['RS256']}, (err: Error | null, decoded: any) => { //BAIM
       if (err === null) {
+        console.log("BAIM: Token poprawny")
         if (authenticatedUsers.get(token) === undefined) {
           authenticatedUsers.put(token, decoded)
           res.cookie('token', token)
         }
+      } else {
+        console.log("BAIM: Token niepoprawny")
+        console.warn(err.message)
       }
     })
   }

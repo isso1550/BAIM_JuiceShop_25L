@@ -147,7 +147,7 @@ async function setUserName (user: User, req: Request, res: Response) {
     res.status(200).json({
       action: 'response',
       body: bot.greet(`${updatedUser.id}`),
-      token: updatedToken
+      //token: updatedToken //BAIM
     })
   } catch (err) {
     logger.error(`Could not set username: ${utils.getErrorMessage(err)}`)
@@ -237,7 +237,7 @@ module.exports.process = function respond () {
 
 async function getUserFromJwt (token: string): Promise<User | null> {
   return await new Promise((resolve) => {
-    jwt.verify(token, security.publicKey, (err: VerifyErrors | null, decoded: JwtPayload | string | undefined) => {
+    jwt.verify(token, security.publicKey, {algorithms: ['RS256']}, (err: VerifyErrors | null, decoded: JwtPayload | string | undefined) => {
       if (err !== null || !decoded || isString(decoded)) {
         resolve(null)
       } else {
