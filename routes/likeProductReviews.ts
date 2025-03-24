@@ -11,9 +11,12 @@ import { challenges } from '../data/datacache'
 
 const security = require('../lib/insecurity')
 
+var sanitize = require('mongo-sanitize');
+
 module.exports = function productReviews () {
   return (req: Request, res: Response, next: NextFunction) => {
-    const id = req.body.id
+    //const id = req.body.id
+    const id = sanitize(req.body.id) //BAIM
     const user = security.authenticatedUsers.from(req)
     db.reviewsCollection.findOne({ _id: id }).then((review: Review) => {
       if (!review) {
