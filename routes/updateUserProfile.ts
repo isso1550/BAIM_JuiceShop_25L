@@ -27,8 +27,14 @@ module.exports = function updateUserProfile () {
               req.body.username !== user.username
           })
           // void user.update({ username: req.body.username })
-          console.log("BAIM: sanityzacja nowego username: ", req.body.username, " wynik: ", xss(req.body.username)) //BAIM
-          void user.update({ username: xss(req.body.username) }).then((savedUser: UserModel) => {
+          
+          //BAIM sanityzacja xss
+          var cleaned = xss(req.body.username)
+          //BAIM bardzo prosta sanityzacja rce
+          cleaned = cleaned.replace("#{", "")
+          
+
+          void user.update({ username: cleaned }).then((savedUser: UserModel) => {
             // @ts-expect-error FIXME some properties missing in savedUser
             savedUser = utils.queryResultToJson(savedUser)
             const updatedToken = security.authorize(savedUser)

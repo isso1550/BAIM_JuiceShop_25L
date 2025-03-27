@@ -27,7 +27,9 @@ global.sleep = (time: number) => {
 
 module.exports = function productReviews () {
   return (req: Request, res: Response, next: NextFunction) => {
-    const id = !utils.isChallengeEnabled(challenges.noSqlCommandChallenge) ? Number(req.params.id) : req.params.id
+    //const id = !utils.isChallengeEnabled(challenges.noSqlCommandChallenge) ? Number(req.params.id) : req.params.id
+
+    const id = Number(req.params.id) //BAIM - wlaczona sanityzacja dostarczona przez Juice Shop
 
     // Measure how long the query takes, to check if there was a nosql dos attack
     const t0 = new Date().getTime()

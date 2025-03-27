@@ -46,8 +46,11 @@ module.exports = function getUserProfile () {
           const theme = themes[config.get<string>('application.theme')]
           if (username) {
            //template = template.replace(/_username_/g, username)
-           console.log("BAIM: sanityzacja username przed wyświetleniem: ", username, " wynik: ", xss(username)) //BAIM
-           template = template.replace(/_username_/g, xss(username))
+          //BAIM - sanityzacja przed wyswietleniem przeciwko wstawianiu #{ do SQL przez funkcje char
+           var cleaned = xss(username)
+           cleaned.replace("#{","")
+           console.log("BAIM: sanityzacja username przed wyświetleniem: ", username, " wynik: ", cleaned)
+           template = template.replace(/_username_/g, cleaned)
           }
           template = template.replace(/_emailHash_/g, security.hash(user?.email))
           template = template.replace(/_title_/g, entities.encode(config.get<string>('application.name')))
