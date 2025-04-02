@@ -258,7 +258,8 @@ export function oauthMatcher (url: UrlSegment[]): UrlMatchResult {
     return null as unknown as UrlMatchResult
   }
   const path = window.location.href
-  if (path.includes('#access_token=')) {
+  //Zmiana #access na access, bo googleapi zwraca state jako pierwszy parametr
+  if (path.includes('access_token=')) {
     return ({ consumed: url })
   }
 

@@ -105,6 +105,10 @@ export class LoginComponent implements OnInit {
   }
 
   googleLogin () {
-    this.windowRefService.nativeWindow.location.replace(`${oauthProviderUrl}?client_id=${this.clientId}&response_type=token&scope=email&redirect_uri=${this.redirectUri}`)
+    //BAIM Generacja i zapis stanu OAuth
+    const state = Math.random().toString(36).slice(2, 10); //https://stackoverflow.com/questions/1349404/generate-a-string-of-random-characters
+    localStorage.setItem('oauth_state', state)
+    //console.log("BAIM 0204: Ustawianie stanu: " + localStorage.getItem('oauth_state'))
+    this.windowRefService.nativeWindow.location.replace(`${oauthProviderUrl}?client_id=${this.clientId}&response_type=token&scope=email&redirect_uri=${this.redirectUri}&state=${state}`)
   }
 }

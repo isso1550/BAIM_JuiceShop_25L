@@ -17,6 +17,17 @@ export class OAuthComponent implements OnInit {
   constructor (private readonly cookieService: CookieService, private readonly userService: UserService, private readonly router: Router, private readonly route: ActivatedRoute, private readonly ngZone: NgZone) { }
 
   ngOnInit () {
+    const params = this.parseRedirectUrlParams()
+    if (params.hasOwnProperty("state") && params.state == localStorage.getItem('oauth_state')){
+      //console.log("BAIM0204: Stan zgodny")
+      localStorage.removeItem('oauth_state')
+    } else {
+      //console.log("BAIM0204: Stan niezgodny - odrzucenie")
+      this.invalidateSession(new Error("Stan niezgodny"))
+      localStorage.removeItem('oauth_state')
+      this.ngZone.run(async () => await this.router.navigate(['/login']))
+      return
+    }
     this.userService.oauthLogin(this.parseRedirectUrlParams().access_token).subscribe((profile: any) => {
       const password = btoa(profile.email.split('').reverse().join(''))
       this.userService.save({ email: profile.email, password, passwordRepeat: password }).subscribe(() => {

@@ -64,3 +64,6 @@ config/*.yml
 
 # System Files
 .DS_Store
+
+# Baim
+cli-ent.py
