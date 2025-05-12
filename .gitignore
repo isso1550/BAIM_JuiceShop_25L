@@ -67,3 +67,6 @@ config/*.yml
 
 # Baim
 cli-ent.py
+__pycache__
+raport.aux
+raport.synctex.gz
